@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <iostream>
 #include <allegro5/allegro_image.h>
-#include "tabuleiro.h"
-#include "bloco.h"
+#include "libs/tabuleiro.h"
+#include "libs/bloco.h"
 
 using namespace std;
 

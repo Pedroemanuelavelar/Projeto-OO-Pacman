@@ -159,16 +159,16 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="libs\Bloco.cpp" />
+    <ClCompile Include="libs\Tabuleiro.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Bloco.cpp" />
-    <ClCompile Include="Tabuleiro.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="bloco.h" />
-    <ClInclude Include="tabuleiro.h" />
+    <Image Include="images\bloco.png" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="bloco.png" />
+    <ClInclude Include="libs\bloco.h" />
+    <ClInclude Include="libs\tabuleiro.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

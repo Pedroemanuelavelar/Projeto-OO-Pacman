@@ -3,14 +3,13 @@
 #include <stdio.h>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_image.h>
-#include "tabuleiro.h"
 #include "bloco.h"
 
 using namespace std;
 
 Bloco::Bloco() {
 	blocopng = NULL;
-	blocopng = al_load_bitmap("bloco.png");
+	blocopng = al_load_bitmap("images/bloco.png");
 	if (!blocopng) {
 		printf("ERRO NO BLOCO");
 	}
