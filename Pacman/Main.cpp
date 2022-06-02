@@ -14,7 +14,7 @@ int main() {
 
 	Tabuleiro t;
 	Bloco b;
-	t.getDisplay(800,600);
+	t.getDisplay(930,630); // 21- 31
 	b.draw();
 	al_rest(3.0);
 	t.destroiDisplay();

@@ -9,6 +9,7 @@ class Bloco {
 		void destroyDraw();
 ;	private:
 		ALLEGRO_BITMAP* blocopng;
+		int matriz[21][31];
 };
 
 #endif // !BLOCO_H
