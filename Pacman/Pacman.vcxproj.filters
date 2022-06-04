@@ -41,4 +41,7 @@
       <Filter>Arquivos de Cabeçalho</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="libs\Matriz.txt" />
+  </ItemGroup>
 </Project>

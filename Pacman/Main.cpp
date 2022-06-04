@@ -14,7 +14,8 @@ int main() {
 
 	Tabuleiro t;
 	Bloco b;
-	t.getDisplay(930,630); // 21- 31
+	t.getDisplay(570,450); // 15 - 19
+	b.preencherMatriz();
 	b.draw();
 	al_rest(3.0);
 	t.destroiDisplay();

@@ -9,7 +9,7 @@ using namespace std;
 Tabuleiro::Tabuleiro() {
 	display = NULL;
 	if (!display) {
-		printf("Tabuleiro criado com sucesso!");
+		printf("\n\nTabuleiro criado com sucesso!");
 	}
 }
 

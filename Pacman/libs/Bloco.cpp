@@ -2,14 +2,20 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <allegro5/allegro5.h>
+#include <fstream>
+#include <iomanip>
 #include <allegro5/allegro_image.h>
 #include "bloco.h"
+
+#define LIN 15
+#define COL 19
 
 using namespace std;
 
 Bloco::Bloco() {
-	for (int i = 0; i < 21; i++) {
-		for (int j = 0; j < 31; j++) {
+
+	for (int i = 0; i < 15; i++) {
+		for (int j = 0; j < 19; j++) {
 			matriz[i][j] = 0;
 		}
 	}
@@ -24,19 +30,40 @@ Bloco::Bloco() {
 }
 
 void Bloco::draw() {
-	for (int i = 0; i < 31; i++) {
-		al_draw_bitmap(blocopng, (30 * i), 0, 0);
-		al_draw_bitmap(blocopng, (30 * i), 600, 0);
 
-	}
-	for (int j = 0; j < 21; j++) {
-		if (j == 10) {
-			j++;
+	for (int i = 0; i < LIN; i++) {
+		for (int j = 0; j < COL; j++) {
+
+			if(matriz[i][j] == 1){
+				al_draw_bitmap(blocopng, (j * 30), (30 * i), 0);
+			}
 		}
-		al_draw_bitmap(blocopng, 0, (30 * j), 0);
-		al_draw_bitmap(blocopng, 900, (30 * j), 0);
 	}
 	al_flip_display();
+}
+
+void Bloco::preencherMatriz() {
+	
+	int aux;
+
+	ifstream txtFile;
+
+	txtFile.open("libs/Matriz.txt");
+
+	for (int i = 0; i < LIN; i++) {
+		for (int j = 0; j < COL; j++) {
+			txtFile >> aux;
+			matriz[i][j] = aux;
+		}
+	}
+
+	for (int i = 0; i < LIN; i++) {
+		for (int j = 0; j < COL; j++) {
+
+			cout << matriz[i][j] << ' ';
+		}
+		printf("\n");
+	}
 }
 
 void Bloco::destroyDraw() {
