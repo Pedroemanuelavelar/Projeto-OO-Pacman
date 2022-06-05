@@ -13,7 +13,7 @@ Tabuleiro::Tabuleiro() {
 	}
 }
 
-void Tabuleiro::getDisplay(int w, int h) {
+void Tabuleiro::criar_display(int w, int h) {
 	display = al_create_display(w, h);
 
 	if (display == NULL) {
@@ -24,6 +24,13 @@ void Tabuleiro::getDisplay(int w, int h) {
 	al_flip_display();
 }
 
-void Tabuleiro::destroiDisplay() {
+void Tabuleiro::desalocar_matriz(int** matriz) {
+	for (int i = 0; i < 15; i++) {
+		free(matriz[i]);
+	}
+	free(matriz);
+}
+
+void Tabuleiro::destroi_display() {
 	al_destroy_display(display); //Destroi a tela
 }

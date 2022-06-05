@@ -5,8 +5,9 @@
 class Tabuleiro {
 	public:
 		Tabuleiro();
-		void getDisplay(int w, int h);
-		void destroiDisplay();
+		void criar_display(int w, int h);
+		void destroi_display();
+		void desalocar_matriz(int **matriz);
 	private:
 		ALLEGRO_DISPLAY* display;
 };

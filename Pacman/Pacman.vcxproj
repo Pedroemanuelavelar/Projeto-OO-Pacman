@@ -160,6 +160,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\Bloco.cpp" />
+    <ClCompile Include="libs\Pilula.cpp" />
     <ClCompile Include="libs\Tabuleiro.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
@@ -168,6 +169,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\bloco.h" />
+    <ClInclude Include="libs\pilula.h" />
     <ClInclude Include="libs\tabuleiro.h" />
   </ItemGroup>
   <ItemGroup>
