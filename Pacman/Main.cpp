@@ -52,6 +52,7 @@ int main() {
 
 	t.criar_display(760,600); // 19 - 15
 	b.desenha_bloco(matriz);
+	al_flip_display();
 	p.desenha_pilula(matriz);
 
 	al_rest(5.0);

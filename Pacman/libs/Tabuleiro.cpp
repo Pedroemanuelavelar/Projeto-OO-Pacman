@@ -21,6 +21,7 @@ void Tabuleiro::criar_display(int w, int h) {
 		return;
 	}
 	al_clear_to_color(al_map_rgb(21, 10, 0));
+	al_flip_display(); 
 	al_flip_display();
 }
 
