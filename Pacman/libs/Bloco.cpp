@@ -18,7 +18,7 @@ Bloco::Bloco() {
 		printf("ERRO NO BLOCO");
 	}
 	else {
-		printf("\nBloco criado com sucesso\n");
+		printf("\nBloco criado com sucesso!\n");
 	}
 }
 

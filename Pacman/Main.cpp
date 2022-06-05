@@ -36,12 +36,15 @@ int main() {
 		}
 	}
 
-	for (int i = 0; i < LIN; i++) {
-		for (int j = 0; j < COL; j++) {
-			cout << matriz[i][j] << ' ';
-		}
-		printf("\n");
-	}
+	// Debug matriz
+	/*
+		for (int i = 0; i < LIN; i++) {
+				for (int j = 0; j < COL; j++) {
+					cout << matriz[i][j] << ' ';
+				}
+				printf("\n");
+			}
+	*/
 
 	Tabuleiro t;
 	Bloco b;
