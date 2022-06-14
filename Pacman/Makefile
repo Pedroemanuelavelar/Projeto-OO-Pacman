@@ -2,11 +2,14 @@ ALLEGRO_FLAGS=-L/usr/local/lib -lallegro `pkg-config --libs allegro-5 allegro_au
 
 ALLEGRO_INCLUDE= -I/usr/local/include/allegro5
 
-all: ./libs/Tabuleiro.o ./libs/Bloco.o ./libs/Pilula.o Main.o
-	g++ ./libs/Tabuleiro.o ./libs/Bloco.o ./libs/Pilula.o  Main.o -o Main.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+all: ./libs/Tabuleiro.o ./libs/Bloco.o ./libs/Pilula.o ./libs/Pacman.o Main.o
+	g++ ./libs/Tabuleiro.o ./libs/Bloco.o ./libs/Pilula.o  ./libs/Pacman.o Main.o -o Main.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
+Pacman.o: ./libs/Pacman.h ./libs/Pacman.cpp
+	g++ -c ./libs/Pacman.cpp -o ./libs/Pacman.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 Tabuleiro.o: ./libs/tabuleiro.h ./libs/Tabuleiro.cpp
-	g++ -c ./libs/Tabuleiro.cpp -o ./libsTabuleiro.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+	g++ -c ./libs/Tabuleiro.cpp -o ./libs/Tabuleiro.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 Bloco.o: ./libs/bloco.h ./libs/Bloco.cpp
 	g++ -c Bloco.cpp -o Bloco.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
@@ -18,4 +21,5 @@ Main.o: ./libs/tabuleiro.h ./libs/bloco.h ./libs/pilula.h Main.cpp
 	g++ -c Main.cpp -o Main.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 clear: 
+	rm *.o *.exe
 	erase *.o *.exe
