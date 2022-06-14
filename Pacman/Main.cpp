@@ -7,9 +7,11 @@
 #include "libs/tabuleiro.h"
 #include "libs/bloco.h"
 #include "libs/pilula.h"
+#include "libs/Pacman.h"
 
 #define LIN 15
 #define COL 19
+#define FPS 60
 
 using namespace std;
 
@@ -17,6 +19,7 @@ int main() {
 
 	al_init();
 	al_init_image_addon();
+	al_install_keyboard();
 
 	int aux;
 	int **matriz;
@@ -45,21 +48,39 @@ int main() {
 				printf("\n");
 			}
 	*/
-
 	Tabuleiro t;
 	Bloco b;
 	Pilula p;
+	Pacman pac;
+
+	bool loop = false;
 
 	t.criar_display(760,600); // 19 - 15
-	b.desenha_bloco(matriz);
-	al_flip_display();
-	p.desenha_pilula(matriz);
 
-	al_rest(5.0);
+	
+	al_register_event_source(t.getEventQ(), al_get_display_event_source(t.getDisplay()));//Evento da Tela
 
-	t.destroi_display();
-	b.destroi_bloco();
-	p.destroi_pilula();
+	al_register_event_source(t.getEventQ(), al_get_timer_event_source(t.getTimer()));//Evento de tempo
+
+	al_register_event_source(t.getEventQ(), al_get_keyboard_event_source());//Evento de Teclado
+
+
+	while(!loop){
+		ALLEGRO_EVENT ev;
+		al_wait_for_event(t.getEventQ(), &ev);
+
+		b.desenha_bloco(matriz);
+		al_flip_display();
+		p.desenha_pilula(matriz);
+		al_flip_display();
+		pac.desenha_pacman();
+
+		al_flip_display();
+
+		if(ev.keyboard.keycode == ALLEGRO_KEY_Q){
+			loop = true;
+		}
+	}        
 	t.desalocar_matriz(matriz);
 
 	return 0;

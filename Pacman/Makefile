@@ -18,4 +18,4 @@ Main.o: ./libs/tabuleiro.h ./libs/bloco.h ./libs/pilula.h Main.cpp
 	g++ -c Main.cpp -o Main.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 clear: 
-	rm *.o *.exe
+	erase *.o *.exe

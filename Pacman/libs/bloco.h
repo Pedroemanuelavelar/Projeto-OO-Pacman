@@ -6,8 +6,8 @@
 class Bloco {
 	public:
 		Bloco();
+		~Bloco();
 		void desenha_bloco(int **matriz);
-		void destroi_bloco();
 ;	private:
 		ALLEGRO_BITMAP* blocopng;
 };

@@ -29,6 +29,6 @@ void Pilula::desenha_pilula(int **matriz) {
 	al_flip_display();
 }
 
-void Pilula::destroi_pilula() {
+Pilula::~Pilula(){
 	al_destroy_bitmap(pilula);
 }

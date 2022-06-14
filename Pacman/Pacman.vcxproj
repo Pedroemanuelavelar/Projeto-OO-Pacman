@@ -156,19 +156,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="Makefile" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="libs\Bloco.cpp" />
+    <ClCompile Include="libs\Pacman.cpp" />
     <ClCompile Include="libs\Pilula.cpp" />
     <ClCompile Include="libs\Tabuleiro.cpp" />
     <ClCompile Include="Main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="images\bloco.png" />
+    <Image Include="images\pacman.png" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="libs\bloco.h" />
+    <ClInclude Include="libs\Pacman.h" />
     <ClInclude Include="libs\pilula.h" />
     <ClInclude Include="libs\tabuleiro.h" />
   </ItemGroup>

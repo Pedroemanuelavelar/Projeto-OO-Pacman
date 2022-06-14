@@ -34,6 +34,6 @@ void Bloco::desenha_bloco(int **matriz) {
 	al_flip_display();
 }
 
-void Bloco::destroi_bloco() {
+Bloco::~Bloco(){
 	al_destroy_bitmap(blocopng);
 }

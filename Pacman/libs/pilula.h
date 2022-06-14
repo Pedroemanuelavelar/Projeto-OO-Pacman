@@ -5,8 +5,8 @@
 class Pilula {
 	public:
 		Pilula();
+		~Pilula();
 		void desenha_pilula(int **matriz);
-		void destroi_pilula();
 	private:
 		ALLEGRO_BITMAP* pilula;
 };
