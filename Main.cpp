@@ -8,9 +8,9 @@
 #include <fstream>
 #include <iomanip>
 #include <math.h>
-#include "Bloco.h"
-#include "Pilula.h"
-#include "Pacman.h"
+#include "./libs/Bloco.h"
+#include "./libs/Pilula.h"
+#include "./libs/Pacman.h"
 
 #define COL 19 
 #define LIN 15
@@ -38,7 +38,7 @@ int main(int argc, char** argv)
         matriz[i] = (int*)malloc(sizeof(int) * COL);
     }
 
-    txtFile.open("Matriz.txt");
+    txtFile.open("libs/Matriz.txt");
 
     for (int i = 0; i < LIN; i++) {
         for (int j = 0; j < COL; j++) {
@@ -47,12 +47,14 @@ int main(int argc, char** argv)
         }
     }
 
+    /*
+    DEGUG
     for (int i = 0; i < LIN; i++) {
         for (int j = 0; j < COL; j++) {
             printf("%d x:%d , y:%d\n", matriz[i][j], j, i);
         }
         printf("\n");
-    }
+    }*/
 
     Bloco b;
     Pilula p;
@@ -63,12 +65,9 @@ int main(int argc, char** argv)
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
-    float darth_x = 0;
-    float darth_y = 0;
-    //int darthL = 200, darthA = 150;
     int proximaIntrucao = 0;
     bool teclas[255] = { false };
-    font = al_load_font("harry.ttf", 30, 0);
+    font = al_load_font("./fonts/harry.ttf", 30, 0);
 
     if (!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
@@ -196,8 +195,6 @@ int main(int argc, char** argv)
                 direcao[DIREITA] = true;
                 direcao[ESQUERDA] = false;
 
-
-
             }
 
             if (up == true && pac.cima_pacman(matriz) == true) {
@@ -254,7 +251,7 @@ int main(int argc, char** argv)
     for (int i = 0; i < 15; i++) {
         free(matriz[i]);
     }
-
     free(matriz);
+
     return 0;
 }
