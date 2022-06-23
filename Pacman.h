@@ -13,6 +13,7 @@ class Pacman {
 		void setpacy(float);
 		float getpacx();
 		float getpacy();
+		int getscore();
 		//
 		bool cima_pacman(int **matriz);
 		bool baixo_pacman(int **matriz);
@@ -53,7 +54,7 @@ class Pacman {
 		int pac_lx_matriz;
 		int pac_lly_matriz;
 		int pac_llx_matriz;
-		//pac com pilula interação de comer
+		//pac com pilula interaï¿½ï¿½o de comer
 		int pac_py_matriz;
 		int pac_px_matriz;
 		int pac_ppy_matriz;

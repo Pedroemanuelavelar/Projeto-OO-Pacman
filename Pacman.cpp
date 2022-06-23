@@ -17,7 +17,7 @@ Pacman::Pacman() {
 		printf("\nPACMAN criado com sucesso!\n");
 	}
 
-	pac_x = 120;
+	pac_x = 40;
 	pac_y = 40;
     score = 0;
 
@@ -168,6 +168,10 @@ void Pacman::pacman_come(int** matriz, bool *direcao) {
 
     x = pac_x_matriz;
     y = pac_y_matriz;
+}
+
+int Pacman::getscore(){
+    return this->score;
 }
 
 void Pacman::desenha_pacman() {

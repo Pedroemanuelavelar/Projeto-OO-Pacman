@@ -4,7 +4,7 @@
 #include "Pilula.h"
 
 #define LIN 15
-#define COL 21
+#define COL 19
 
 Pilula::Pilula() {
 	this->pilulapng = NULL;

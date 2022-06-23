@@ -1,5 +1,7 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -10,9 +12,9 @@
 #include "Pilula.h"
 #include "Pacman.h"
 
-#define COL 21
+#define COL 19 
 #define LIN 15
-#define FPS 30
+#define FPS 60
 
 enum DIRECAO { CIMA, BAIXO, DIREITA, ESQUERDA };
 bool direcao[] = { false, false, false, false };
@@ -24,6 +26,8 @@ int main(int argc, char** argv)
     al_init();
     al_install_keyboard();//Funcoes Teclado
     al_init_image_addon();//Imagens
+    al_init_ttf_addon(); // Fonte
+    al_init_font_addon(); // Fonte
 
 	int aux;
 	int** matriz;
@@ -53,11 +57,10 @@ int main(int argc, char** argv)
     Bloco b;
     Pilula p;
     Pacman pac;
+
+    ALLEGRO_FONT* font = NULL;
     ALLEGRO_DISPLAY* display = NULL;
-
-    ALLEGRO_EVENT_QUEUE* event_queue = NULL; //Fila de Eventos
-
-    //Temporizador
+    ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
     float darth_x = 0;
@@ -65,7 +68,7 @@ int main(int argc, char** argv)
     //int darthL = 200, darthA = 150;
     int proximaIntrucao = 0;
     bool teclas[255] = { false };
-
+    font = al_load_font("harry.ttf", 30, 0);
 
     if (!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
@@ -235,6 +238,8 @@ int main(int argc, char** argv)
             al_clear_to_color(al_map_rgb(21, 10, 0));
             p.desenha_pilula(matriz);
             b.desenha_bloco(matriz);
+            al_draw_text(font, al_map_rgb(255, 255, 0), 800, 1, 0, "Score");
+            al_draw_textf(font, al_map_rgb(255, 255, 0), 814, 40, NULL,"%d",pac.getscore());
             pac.desenha_pacman();
             al_flip_display();
         }
@@ -244,6 +249,7 @@ int main(int argc, char** argv)
     al_destroy_timer(timer);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
+    al_destroy_font(font);
 
     for (int i = 0; i < 15; i++) {
         free(matriz[i]);

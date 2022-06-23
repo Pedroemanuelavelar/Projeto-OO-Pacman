@@ -4,7 +4,7 @@
 #include "Bloco.h"
 
 #define LIN 15
-#define COL 21
+#define COL 19
 
 Bloco::Bloco() {
 	this->blocopng = NULL;
