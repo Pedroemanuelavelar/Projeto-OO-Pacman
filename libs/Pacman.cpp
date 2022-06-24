@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 Pacman::Pacman() {
 	this->pacman = NULL;
 	this->pacman = al_load_bitmap("images/pacman.png");
@@ -22,83 +21,83 @@ Pacman::Pacman() {
     score = 0;
 
 	//padrao
-	int pac_y_matriz = 0;
-	int pac_x_matriz = 0;
+	 this->pac_y_matriz = 0;
+	 this->pac_x_matriz = 0;
 	//cima
-	int pac_cy_matriz = 0;
-	int pac_cx_matriz = 0;
-	int pac_ccy_matriz = 0;
-	int pac_ccx_matriz = 0;
+	 this->pac_cy_matriz = 0;
+	 this->pac_cx_matriz = 0;
+	 this->pac_ccy_matriz = 0;
+	 this->pac_ccx_matriz = 0;
 	//baixo
-	int pac_by_matriz = 0;
-	int pac_bx_matriz = 0;
-	int pac_bby_matriz = 0;
-	int pac_bbx_matriz = 0;
+	 this->pac_by_matriz = 0;
+	 this->pac_bx_matriz = 0;
+	 this->pac_bby_matriz = 0;
+	 this->pac_bbx_matriz = 0;
 	//direita
-	int pac_ry_matriz = 0;
-	int pac_rx_matriz = 0;
-	int pac_rry_matriz = 0;
-	int pac_rrx_matriz = 0;
+	 this->pac_ry_matriz = 0;
+	 this->pac_rx_matriz = 0;
+	 this->pac_rry_matriz = 0;
+	 this->pac_rrx_matriz = 0;
 	//esquerda
-	int pac_ly_matriz = 0;
-	int pac_lx_matriz = 0;
-	int pac_lly_matriz = 0;
-	int pac_llx_matriz = 0;
-    //pac com pilula intera��o de comer
-    int pac_py_matriz = 0;
-    int pac_px_matriz = 0;
-    int pac_ppy_matriz = 0;
-    int pac_ppx_matriz = 0;
+	 this->pac_ly_matriz = 0;
+	 this->pac_lx_matriz = 0;
+	 this->pac_lly_matriz = 0;
+	 this->pac_llx_matriz = 0;
+    //pac com pilula ethis->ra��o de comer
+     this->pac_py_matriz = 0;
+     this->pac_px_matriz = 0;
+     this->pac_ppy_matriz = 0;
+     this->pac_ppx_matriz = 0;
 }
 
 void Pacman::setpacx(float x) {
-	pac_x = x;
+	this->pac_x = x;
 }
 void Pacman::setpacy(float y) {
-	pac_y = y;
+	this->pac_y = y;
 }
 
 float Pacman::getpacx() {
-	return pac_x;
+	return this->pac_x;
 }
 float Pacman::getpacy() {
-	return pac_y;
+	return this->pac_y;
 }
 
 void Pacman::conversao() {
     //padr�o
-    pac_y_matriz = (pac_y) / 40;
-    pac_x_matriz = (pac_x) / 40;
+    this->pac_y_matriz = (pac_y) / 40;
+    this->pac_x_matriz = (pac_x) / 40;
     //cima
-    pac_cy_matriz = ceil(pac_y / 40);
-    pac_cx_matriz = pac_x / 40;
-    pac_ccy_matriz = ceil(pac_y / 40);
-    pac_ccx_matriz = ceil(pac_x / 40);
+    this->pac_cy_matriz = ceil(pac_y / 40);
+    this->pac_cx_matriz = pac_x / 40;
+    this->pac_ccy_matriz = ceil(pac_y / 40);
+    this->pac_ccx_matriz = ceil(pac_x / 40);
     //baixo
-    pac_by_matriz = pac_y / 40;
-    pac_bx_matriz = ceil(pac_x / 40);
-    pac_bby_matriz = pac_y / 40;
-    pac_bbx_matriz = pac_x / 40;
+    this->pac_by_matriz = pac_y / 40;
+    this->pac_bx_matriz = ceil(pac_x / 40);
+    this->pac_bby_matriz = pac_y / 40;
+    this->pac_bbx_matriz = pac_x / 40;
     //direita
-    pac_ry_matriz = ceil(pac_y / 40);
-    pac_rx_matriz = pac_x / 40;
-    pac_rry_matriz = pac_y / 40;
-    pac_rrx_matriz = pac_x / 40;
+    this->pac_ry_matriz = ceil(pac_y / 40);
+    this->pac_rx_matriz = pac_x / 40;
+    this->pac_rry_matriz = pac_y / 40;
+    this->pac_rrx_matriz = pac_x / 40;
     //esquerda
-    pac_ly_matriz = ceil(pac_y / 40);
-    pac_lx_matriz = ceil(pac_x / 40);
-    pac_lly_matriz = pac_y / 40;
-    pac_llx_matriz = ceil(pac_x / 40);
+    this->pac_ly_matriz = ceil(pac_y / 40);
+    this->pac_lx_matriz = ceil(pac_x / 40);
+    this->pac_lly_matriz = pac_y / 40;
+    this->pac_llx_matriz = ceil(pac_x / 40);
     //pac com pilula intera��o de comer
-    pac_py_matriz = pac_y / 40;
-    pac_px_matriz = pac_x / 40;
-    pac_ppy_matriz = ceil(pac_y / 40);
-    pac_ppx_matriz = ceil(pac_x / 40);
+    this->pac_py_matriz = pac_y / 40;
+    this->pac_px_matriz = pac_x / 40;
+    this->pac_ppy_matriz = ceil(pac_y / 40);
+    this->pac_ppx_matriz = ceil(pac_x / 40);
 }
 
 bool Pacman::cima_pacman(int **matriz) {
-    if (matriz[pac_y_matriz][pac_x_matriz] != 1) {
-        if (matriz[pac_cy_matriz - 1][pac_cx_matriz] != 1 && matriz[pac_ccy_matriz - 1][pac_ccx_matriz] != 1) {
+    if (matriz[this->pac_y_matriz][this->pac_x_matriz] != 1) {
+        if (matriz[this->pac_cy_matriz - 1][this->pac_cx_matriz] != 1 && matriz[this->pac_ccy_matriz - 1][this->pac_ccx_matriz] != 1) {
             return true;
         }
         else {
@@ -107,9 +106,8 @@ bool Pacman::cima_pacman(int **matriz) {
     }
 }
 bool Pacman::baixo_pacman(int **matriz) {
-    if (matriz[pac_y_matriz][pac_x_matriz] != 1) {
-
-        if (matriz[pac_by_matriz + 1][pac_bx_matriz] != 1 && matriz[pac_bby_matriz + 1][pac_bbx_matriz] != 1) {
+    if (matriz[this->pac_y_matriz][this->pac_x_matriz] != 1) {
+        if (matriz[this->pac_by_matriz + 1][this->pac_bx_matriz] != 1 && matriz[this->pac_bby_matriz + 1][this->pac_bbx_matriz] != 1) {
             return true;
         }
         else {
@@ -118,8 +116,8 @@ bool Pacman::baixo_pacman(int **matriz) {
     }
 }
 bool Pacman::direita_pacman(int **matriz) {
-    if (matriz[pac_y_matriz][pac_x_matriz] != 1) {
-        if (matriz[pac_ry_matriz][pac_rx_matriz + 1] != 1 && matriz[pac_rry_matriz][pac_rrx_matriz + 1] != 1) {
+    if (matriz[this->pac_y_matriz][this->pac_x_matriz] != 1) {
+        if (matriz[this->pac_ry_matriz][this->pac_rx_matriz + 1] != 1 && matriz[this->pac_rry_matriz][this->pac_rrx_matriz + 1] != 1) {
             return true;
         }
         else {
@@ -128,8 +126,8 @@ bool Pacman::direita_pacman(int **matriz) {
     }
 }
 bool Pacman::esquerda_pacman(int **matriz) {
-    if (matriz[pac_y_matriz][pac_x_matriz] != 1) {
-        if (matriz[pac_ly_matriz][pac_lx_matriz - 1] != 1 && matriz[pac_lly_matriz][pac_llx_matriz - 1] != 1) {
+    if (matriz[this->pac_y_matriz][this->pac_x_matriz] != 1) {
+        if (matriz[this->pac_ly_matriz][this->pac_lx_matriz - 1] != 1 && matriz[this->pac_lly_matriz][this->pac_llx_matriz - 1] != 1) {
             return true;
         }
         else {
@@ -142,32 +140,32 @@ void Pacman::pacman_come(int** matriz, bool *direcao) {
     int x, y;
     x = 0;
     y = 0;
-    if (matriz[pac_y_matriz][pac_x_matriz] == 2) {
+    if (matriz[this->pac_y_matriz][this->pac_x_matriz] == 2) {
         if (direcao[0] == true ) {
-            if (matriz[pac_ppy_matriz][pac_px_matriz] == 2) {
-                matriz[pac_ppy_matriz][pac_px_matriz] = 0;
+            if (matriz[this->pac_ppy_matriz][this->pac_px_matriz] == 2) {
+                matriz[this->pac_ppy_matriz][this->pac_px_matriz] = 0;
                 score++;
                 //cout << score << endl;
             }
             //cout << "entrou" << endl;
         }
         else if (direcao[3] == true ) {
-            if (matriz[pac_py_matriz][pac_ppx_matriz] == 2) {
-                matriz[pac_py_matriz][pac_ppx_matriz] = 0;
+            if (matriz[this->pac_py_matriz][this->pac_ppx_matriz] == 2) {
+                matriz[this->pac_py_matriz][this->pac_ppx_matriz] = 0;
                 score++;
                 //cout << score << endl;
             }
             //cout << "entrou2" << endl;
         }
         else {
-            matriz[pac_py_matriz][pac_px_matriz] = 0;
+            matriz[this->pac_py_matriz][this->pac_px_matriz] = 0;
             score++;
             //cout << score << endl;
         }
     }
 
-    x = pac_x_matriz;
-    y = pac_y_matriz;
+    x = this->pac_x_matriz;
+    y = this->pac_y_matriz;
 }
 
 int Pacman::getscore(){

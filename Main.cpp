@@ -65,7 +65,7 @@ int main(int argc, char** argv){
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
-    int proximaIntrucao = 0;
+    int proximoMovimento = 0;
     bool teclas[255] = { false };
     font = al_load_font("./fonts/harry.ttf", 30, 0);
 
@@ -133,19 +133,19 @@ int main(int argc, char** argv){
             }
 
             if (teclas[ALLEGRO_KEY_UP]){
-                proximaIntrucao = ALLEGRO_KEY_UP;
+                proximoMovimento = ALLEGRO_KEY_UP;
             }
             if (teclas[ALLEGRO_KEY_DOWN]){
-                proximaIntrucao = ALLEGRO_KEY_DOWN;
+                proximoMovimento = ALLEGRO_KEY_DOWN;
             }
             if (teclas[ALLEGRO_KEY_LEFT]){
-                proximaIntrucao = ALLEGRO_KEY_LEFT;
+                proximoMovimento = ALLEGRO_KEY_LEFT;
             }
             if (teclas[ALLEGRO_KEY_RIGHT]){
-                proximaIntrucao = ALLEGRO_KEY_RIGHT;
+                proximoMovimento = ALLEGRO_KEY_RIGHT;
             }
 
-            if(proximaIntrucao == ALLEGRO_KEY_UP && pac.cima_pacman(matriz) == true) {
+            if(proximoMovimento == ALLEGRO_KEY_UP && pac.cima_pacman(matriz) == true) {
 
                 up = true;
                 down = false;
@@ -157,7 +157,7 @@ int main(int argc, char** argv){
                 direcao[DIREITA] = false;
                 direcao[ESQUERDA] = false;
 
-            } else if(proximaIntrucao == ALLEGRO_KEY_DOWN && pac.baixo_pacman(matriz) == true) {
+            } else if(proximoMovimento == ALLEGRO_KEY_DOWN && pac.baixo_pacman(matriz) == true) {
 
                 up = false;
                 down = true;
@@ -170,7 +170,7 @@ int main(int argc, char** argv){
                 direcao[ESQUERDA] = false;
 
 
-            }else if(proximaIntrucao == ALLEGRO_KEY_LEFT && pac.esquerda_pacman(matriz) == true) {
+            }else if(proximoMovimento == ALLEGRO_KEY_LEFT && pac.esquerda_pacman(matriz) == true) {
 
                 up = false;
                 down = false;
@@ -183,7 +183,7 @@ int main(int argc, char** argv){
                 direcao[ESQUERDA] = true;
 
 
-            }else if(proximaIntrucao == ALLEGRO_KEY_RIGHT && pac.direita_pacman(matriz) == true) {
+            }else if(proximoMovimento == ALLEGRO_KEY_RIGHT && pac.direita_pacman(matriz) == true) {
 
                 up = false;
                 down = false;

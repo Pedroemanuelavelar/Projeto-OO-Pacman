@@ -21,7 +21,7 @@ void Bloco::desenha_bloco(int** matriz) {
 	for (int i = 0; i < LIN; i++) {
 		for (int j = 0; j < COL; j++) {
 			if (matriz[i][j] == 1) {
-				al_draw_bitmap(blocopng, (j * 40), (40 * i), 0);
+				al_draw_bitmap(this->blocopng, (j * 40), (40 * i), 0);
 			}
 		}
 	}
