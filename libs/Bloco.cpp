@@ -8,7 +8,7 @@
 
 Bloco::Bloco() {
 	this->blocopng = NULL;
-	if (!blocopng) {
+	if (blocopng) {
 		printf("ERRO NO BLOCO");
 	}
 	else {

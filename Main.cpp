@@ -21,8 +21,8 @@ bool direcao[] = { false, false, false, false };
 
 using namespace std;
 
-int main(int argc, char** argv)
-{
+int main(int argc, char** argv){
+    
     al_init();
     al_install_keyboard();//Funcoes Teclado
     al_init_image_addon();//Imagens

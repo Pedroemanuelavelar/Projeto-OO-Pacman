@@ -8,7 +8,7 @@
 
 Pilula::Pilula() {
 	this->pilulapng = NULL;
-	if (!pilulapng) {
+	if (pilulapng) {
 		printf("ERRO NA PILULA");
 	}
 	else {
