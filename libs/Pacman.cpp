@@ -172,8 +172,8 @@ int Pacman::getscore(){
     return this->score;
 }
 
-void Pacman::desenha_pacman() {
-	al_draw_bitmap_region(pacman,0, 0, 40, 40, pac_x, pac_y, 0);
+void Pacman::desenha_pacman(int sprite, int dir) {
+	al_draw_bitmap_region(pacman,sprite*40, dir*40, 40, 40, pac_x, pac_y, 0);
 }
 
 ALLEGRO_BITMAP* Pacman::getPacman() {

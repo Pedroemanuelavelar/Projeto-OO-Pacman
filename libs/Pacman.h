@@ -7,7 +7,7 @@ class Pacman {
 		Pacman();
 		~Pacman();
 		//
-		void desenha_pacman();
+		void desenha_pacman(int, int);
 		//
 		void setpacx(float);
 		void setpacy(float);

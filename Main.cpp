@@ -2,6 +2,8 @@
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include "allegro5/allegro_audio.h"
+#include "allegro5/allegro_acodec.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <iostream>
@@ -19,6 +21,8 @@
 enum DIRECAO { CIMA, BAIXO, DIREITA, ESQUERDA };
 bool direcao[] = { false, false, false, false };
 
+enum STATE { MENU, PLAYING };
+
 using namespace std;
 
 int main(int argc, char** argv){
@@ -28,6 +32,9 @@ int main(int argc, char** argv){
     al_init_image_addon();//Imagens
     al_init_ttf_addon(); // Fonte
     al_init_font_addon(); // Fonte
+    al_install_audio(); // audio
+    al_init_acodec_addon(); // audio
+    al_reserve_samples(1); // audio
 
 	int aux;
 	int** matriz;
@@ -61,13 +68,23 @@ int main(int argc, char** argv){
     Pacman pac;
 
     ALLEGRO_FONT* font = NULL;
+    ALLEGRO_FONT* fontInitScr = NULL;
+    ALLEGRO_FONT* fontFooterScr = NULL;
+    ALLEGRO_BITMAP * logopng = NULL;
     ALLEGRO_DISPLAY* display = NULL;
+    ALLEGRO_SAMPLE *sample=NULL;
+    ALLEGRO_SAMPLE_INSTANCE *instance = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
     int proximoMovimento = 0;
     bool teclas[255] = { false };
     font = al_load_font("./fonts/harry.ttf", 30, 0);
+    fontInitScr = al_load_font("./fonts/dogicapixel.ttf", 14, 0);
+    fontFooterScr = al_load_font("./fonts/dogicapixel.ttf", 11, 0);
+
+    // State variables
+    int state = MENU;
 
     if (!al_init()) {
         fprintf(stderr, "failed to initialize allegro!\n");
@@ -105,13 +122,28 @@ int main(int argc, char** argv){
     bool down = false;
     bool left = false;
     bool right = false;
+    bool space = false;
+
+    int lado = 0; 
+
+    // int logopng;
 
     int sprite = 0, fator = 1;
     int tempo, miliseg = 200;
     float pac_x = 40;
     float pac_y = 40;
 
-    al_clear_to_color(al_map_rgb(21, 10, 0));
+    al_clear_to_color(al_map_rgb(21, 10, 0));//Quantidade de Audios
+
+    sample = al_load_sample( "audios/harrysong.wav" );
+    instance = al_create_sample_instance(sample);
+
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+
+    if (!sample){
+        printf( "Audio clip sample not loaded!\n" ); 
+        return -1;
+    }
 
     while (!termina){
 
@@ -129,8 +161,11 @@ int main(int argc, char** argv){
                 al_set_timer_count(timer, 0);
                 sprite = sprite + fator; 
                 if (sprite == 0) fator = 1;
-                if (sprite == 3) fator = -1;
+                if (sprite == 5) fator = -1;
             }
+
+            // cout << "Sprite: " << sprite << endl;
+
 
             if (teclas[ALLEGRO_KEY_UP]){
                 proximoMovimento = ALLEGRO_KEY_UP;
@@ -144,6 +179,15 @@ int main(int argc, char** argv){
             if (teclas[ALLEGRO_KEY_RIGHT]){
                 proximoMovimento = ALLEGRO_KEY_RIGHT;
             }
+            // Space
+            /*if (teclas[ALLEGRO_KEY_SPACE]){
+                return true;
+            }*/
+            
+           if (state == MENU) {
+                if (teclas[ALLEGRO_KEY_SPACE]) 
+                    state = PLAYING;
+           }
 
             if(proximoMovimento == ALLEGRO_KEY_UP && pac.cima_pacman(matriz) == true) {
 
@@ -151,6 +195,8 @@ int main(int argc, char** argv){
                 down = false;
                 left = false;
                 right = false;
+
+                lado = 3;
 
                 direcao[CIMA] = true;
                 direcao[BAIXO] = false;
@@ -163,6 +209,8 @@ int main(int argc, char** argv){
                 down = true;
                 left = false;
                 right = false;
+
+                lado = 0;
 
                 direcao[CIMA] = false;
                 direcao[BAIXO] = true;
@@ -177,6 +225,8 @@ int main(int argc, char** argv){
                 left = true;
                 right = false;
 
+                lado = 1;
+
                 direcao[CIMA] = false;
                 direcao[BAIXO] = false;
                 direcao[DIREITA] = false;
@@ -189,6 +239,8 @@ int main(int argc, char** argv){
                 down = false;
                 left = false;
                 right = true;
+
+                lado = 2;
 
                 direcao[CIMA] = false;
                 direcao[BAIXO] = false;
@@ -229,6 +281,7 @@ int main(int argc, char** argv){
                 
         }
         if (re_desenha && al_is_event_queue_empty(event_queue)) { //Redesenha se a fila de eventos esta vazia
+
             re_desenha = false;
             p.~Pilula();
             b.~Bloco();
@@ -237,7 +290,30 @@ int main(int argc, char** argv){
             b.desenha_bloco(matriz);
             al_draw_text(font, al_map_rgb(255, 255, 0), 800, 1, 0, "Score");
             al_draw_textf(font, al_map_rgb(255, 255, 0), 814, 40, NULL,"%d",pac.getscore());
-            pac.desenha_pacman();
+            pac.desenha_pacman(sprite, lado);
+
+            if (state == MENU) {
+
+                al_clear_to_color(al_map_rgb(21, 10, 0));
+
+               al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+               
+                logopng = al_load_bitmap("images/logo.png");
+                al_draw_bitmap(logopng,175,20,0); 
+
+                   
+                     // contador
+                    if (tempo > 50 ) 
+                        tempo=0; 
+                    
+                    if (tempo < 25 )
+                    // cout << "tempo: " << tempo << endl; 
+                    al_draw_text(fontInitScr, al_map_rgb(255, 255, 255), 275, 340, 0,"PRESS (SPACE) TO START GAME");
+                
+                al_draw_text(fontFooterScr, al_map_rgb(255, 255, 0), 146, 570, 0,"© 2022 - PacPotter, By: Carlos Eduado, Vinicius do Carmo e Pedro Emanuel ");
+                // cout << "Tela Inicial!!" << endl;
+            } 
+
             al_flip_display();
         }
     }
@@ -246,7 +322,12 @@ int main(int argc, char** argv){
     al_destroy_timer(timer);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
+    al_destroy_sample(sample);
+    al_destroy_sample_instance(instance);
+    al_destroy_bitmap(logopng);
     al_destroy_font(font);
+    al_destroy_font(fontInitScr);
+    al_destroy_font(fontFooterScr);
 
     for (int i = 0; i < 15; i++) {
         free(matriz[i]);
