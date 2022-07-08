@@ -295,13 +295,13 @@ int main(int argc, char** argv){
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
 
-                (sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+               al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
                 logopng = al_load_bitmap("images/logo.png");
                 al_draw_bitmap(logopng,175,20,0); 
 
-                if (tempo > 50 ) 
-                    tempo=0; 
+                if (tempo > 50 )
+                    tempo=0;
                 
                 if (tempo < 25 )
                     // cout << "tempo: " << tempo << endl; 
@@ -309,8 +309,7 @@ int main(int argc, char** argv){
                 
                 al_draw_text(fontFooterScr, al_map_rgb(255, 255, 0), 146, 570, 0,"© 2022 - PacPotter, By: Carlos Eduado, Vinicius do Carmo e Pedro Emanuel ");
                 // cout << "Tela Inicial!!" << endl;
-            } 
-
+            }
             al_flip_display();
         }
     }
