@@ -295,7 +295,7 @@ int main(int argc, char** argv){
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
 
-                (sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+                al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
                 logopng = al_load_bitmap("images/logo.png");
                 al_draw_bitmap(logopng,175,20,0); 
