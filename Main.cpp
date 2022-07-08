@@ -184,10 +184,10 @@ int main(int argc, char** argv){
                 return true;
             }*/
             
-           if (state == MENU) {
+            if (state == MENU) {
                 if (teclas[ALLEGRO_KEY_SPACE]) 
                     state = PLAYING;
-           }
+            }
 
             if(proximoMovimento == ALLEGRO_KEY_UP && pac.cima_pacman(matriz) == true) {
 
@@ -278,7 +278,6 @@ int main(int argc, char** argv){
             if (ev.keyboard.keycode == ALLEGRO_KEY_ESCAPE){
                 termina = true;
             }
-                
         }
         if (re_desenha && al_is_event_queue_empty(event_queue)) { //Redesenha se a fila de eventos esta vazia
 
@@ -296,19 +295,17 @@ int main(int argc, char** argv){
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
 
-               al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
-               
+                (sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+
                 logopng = al_load_bitmap("images/logo.png");
                 al_draw_bitmap(logopng,175,20,0); 
 
-                   
-                     // contador
-                    if (tempo > 50 ) 
-                        tempo=0; 
-                    
-                    if (tempo < 25 )
+                if (tempo > 50 ) 
+                    tempo=0; 
+                
+                if (tempo < 25 )
                     // cout << "tempo: " << tempo << endl; 
-                    al_draw_text(fontInitScr, al_map_rgb(255, 255, 255), 275, 340, 0,"PRESS (SPACE) TO START GAME");
+                al_draw_text(fontInitScr, al_map_rgb(255, 255, 255), 275, 340, 0,"PRESS (SPACE) TO START GAME");
                 
                 al_draw_text(fontFooterScr, al_map_rgb(255, 255, 0), 146, 570, 0,"© 2022 - PacPotter, By: Carlos Eduado, Vinicius do Carmo e Pedro Emanuel ");
                 // cout << "Tela Inicial!!" << endl;
