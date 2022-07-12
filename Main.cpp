@@ -79,8 +79,8 @@ int main(int argc, char** argv){
     ALLEGRO_FONT* fontFooterScr = NULL;
     ALLEGRO_BITMAP * logopng = NULL;
     ALLEGRO_DISPLAY* display = NULL;
-    ALLEGRO_SAMPLE *sample=NULL;
-    ALLEGRO_SAMPLE_INSTANCE *instance = NULL;
+   // ALLEGRO_SAMPLE *sample=NULL;
+    //ALLEGRO_SAMPLE_INSTANCE *instance = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
 
@@ -156,15 +156,15 @@ int main(int argc, char** argv){
 
     al_clear_to_color(al_map_rgb(21, 10, 0));//Quantidade de Audios
 
-    sample = al_load_sample( "audios/harrysong.wav" );
-    instance = al_create_sample_instance(sample);
+    //sample = al_load_sample( "audios/harrysong.wav" );
+    //instance = al_create_sample_instance(sample);
 
-    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+    //al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
 
-    if (!sample){
+    /*if (!sample){
         printf( "Audio clip sample not loaded!\n" ); 
         return -1;
-    }
+    }*/
 
     while (!termina){
         
@@ -414,7 +414,7 @@ int main(int argc, char** argv){
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
 
-                al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+                //al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
                 logopng = al_load_bitmap("images/logo.png");
                 al_draw_bitmap(logopng,175,20,0); 
@@ -438,8 +438,8 @@ int main(int argc, char** argv){
     al_destroy_timer(timer);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-    al_destroy_sample(sample);
-    al_destroy_sample_instance(instance);
+   //al_destroy_sample(sample);
+    //al_destroy_sample_instance(instance);
     al_destroy_bitmap(logopng);
     al_destroy_font(font);
     al_destroy_font(fontInitScr);
