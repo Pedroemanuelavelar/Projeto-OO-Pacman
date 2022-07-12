@@ -9,10 +9,13 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <time.h>
 #include <math.h>
 #include "./libs/Bloco.h"
 #include "./libs/Pilula.h"
 #include "./libs/Pacman.h"
+#include "./libs/Dementador.h"
+#include "./libs/Movimentacao.h"
 
 #define COL 19 
 #define LIN 15
@@ -20,6 +23,9 @@
 
 enum DIRECAO { CIMA, BAIXO, DIREITA, ESQUERDA };
 bool direcao[] = { false, false, false, false };
+
+enum DIRECAODEM { CIMADEM, BAIXODEM, DIREITADEM, ESQUERDADEM };
+bool direcaodem[] = { false, false, false, false };
 
 enum STATE { MENU, PLAYING };
 
@@ -66,6 +72,7 @@ int main(int argc, char** argv){
     Bloco b;
     Pilula p;
     Pacman pac;
+    Dementador demons[4];
 
     ALLEGRO_FONT* font = NULL;
     ALLEGRO_FONT* fontInitScr = NULL;
@@ -124,9 +131,23 @@ int main(int argc, char** argv){
     bool right = false;
     bool space = false;
 
+    bool updem = false;
+    bool downdem = false;
+    bool leftdem = false;
+    bool rightdem = false;
+    bool spacedem = false;
+
     int lado = 0; 
 
-    // int logopng;
+    for(int i = 0, j = 8; i < 4; i++, j++){
+        if(j == 11){
+            j--;
+            demons[i].setposy(40 * 6);
+        }else{
+            demons[i].setposy(40 * 7);
+        }
+        demons[i].setposx(40 * j);
+    }
 
     int sprite = 0, fator = 1;
     int tempo, miliseg = 200;
@@ -146,7 +167,11 @@ int main(int argc, char** argv){
     }
 
     while (!termina){
-
+        
+        for(int i = 0; i < 4; i++){
+            demons[i].conversao();
+        }
+     
         pac.conversao();
         pac.pacman_come(matriz, direcao);
 
@@ -189,6 +214,7 @@ int main(int argc, char** argv){
                     state = PLAYING;
             }
 
+            //Movimentação do Pacman
             if(proximoMovimento == ALLEGRO_KEY_UP && pac.cima_pacman(matriz) == true) {
 
                 up = true;
@@ -249,6 +275,91 @@ int main(int argc, char** argv){
 
             }
 
+            //Geração aleatória para a direção do fantasma
+            int i, dem = 0;
+
+            srand(time(NULL));
+
+            //Movimentação do Dementador
+
+            for(int i = 0; i < 4; i++){
+
+                dem = rand() % 100;
+        
+                if (dem <= 25 && demons[i].cima_dementador(matriz) == true) {
+
+                    updem = true;
+                    downdem = false;
+                    leftdem = false;
+                    rightdem = false;
+
+                    direcaodem[CIMADEM] = true;
+                    direcaodem[BAIXODEM] = false;
+                    direcaodem[DIREITADEM] = false;
+                    direcaodem[ESQUERDADEM] = false;
+
+                }
+                else if (dem > 25 && dem <=50 && demons[i].baixo_dementador(matriz) == true) {
+
+                    updem = false;
+                    downdem = true;
+                    leftdem = false;
+                    rightdem = false;
+
+                    direcaodem[CIMADEM] = false;
+                    direcaodem[BAIXODEM] = true;
+                    direcaodem[DIREITADEM] = false;
+                    direcaodem[ESQUERDADEM] = false;
+
+
+                }
+                else if (dem > 50 && dem <= 75 && demons[i].esquerda_dementador(matriz) == true) {
+
+                    updem = false;
+                    downdem = false;
+                    leftdem = true;
+                    rightdem = false;
+
+                    direcaodem[CIMADEM] = false;
+                    direcaodem[BAIXODEM] = false;
+                    direcaodem[DIREITADEM] = false;
+                    direcaodem[ESQUERDADEM] = true;
+
+
+                }
+                else if (dem > 75 && dem <= 100 && demons[i].direita_dementador(matriz) == true) {
+
+                    updem = false;
+                    downdem = false;
+                    leftdem = false;
+                    rightdem = true;
+
+                    direcaodem[CIMADEM] = false;
+                    direcaodem[BAIXODEM] = false;
+                    direcaodem[DIREITADEM] = true;
+                    direcaodem[ESQUERDADEM] = false;
+
+                }
+
+                //Movi do dementador
+                if (updem == true && demons[i].cima_dementador(matriz) == true) {
+                    demons[i].setdemy(demons[i].getdemy() - 2.0);
+                }
+
+                if (downdem == true && demons[i].baixo_dementador(matriz) == true) {
+                    demons[i].setdemy(demons[i].getdemy() + 2.0);
+                }
+
+                if (leftdem == true && demons[i].esquerda_dementador(matriz) == true) {
+                    demons[i].setdemx(demons[i].getdemx() - 2.0);
+                }
+
+                if (rightdem == true && demons[i].direita_dementador(matriz) == true) {
+                    demons[i].setdemx(demons[i].getdemx() + 2.0);
+                }
+            }
+
+            //Movi do pacman
             if (up == true && pac.cima_pacman(matriz) == true) {
                 pac.setpacy(pac.getpacy() - 2.0);
             }
@@ -285,12 +396,20 @@ int main(int argc, char** argv){
             p.~Pilula();
             b.~Bloco();
             al_clear_to_color(al_map_rgb(21, 10, 0));
+            //al_clear_to_color(al_map_rgb(0, 0, 255));
             p.desenha_pilula(matriz);
             b.desenha_bloco(matriz);
             al_draw_text(font, al_map_rgb(255, 255, 0), 800, 1, 0, "Score");
             al_draw_textf(font, al_map_rgb(255, 255, 0), 814, 40, NULL,"%d",pac.getscore());
             pac.desenha_pacman(sprite, lado);
-
+            for(int i = 0; i < 4; i++){
+                demons[i].desenha_dementador();
+                if(pac.getpacx() == demons[i].getposx() 
+                    && pac.getpacy() == demons[i].getposy()){
+                exit(1);
+                }
+            }
+            
             if (state == MENU) {
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
