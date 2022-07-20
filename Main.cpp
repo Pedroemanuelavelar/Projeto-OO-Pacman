@@ -27,7 +27,7 @@ bool direcao[] = { false, false, false, false };
 enum DIRECAODEM { CIMADEM, BAIXODEM, DIREITADEM, ESQUERDADEM };
 bool direcaodem[] = { false, false, false, false };
 
-enum STATE { MENU, PLAYING };
+enum STATE { MENU, PLAYING, GAMEOVER };
 
 using namespace std;
 
@@ -77,18 +77,27 @@ int main(int argc, char** argv){
     ALLEGRO_FONT* font = NULL;
     ALLEGRO_FONT* fontInitScr = NULL;
     ALLEGRO_FONT* fontFooterScr = NULL;
+    ALLEGRO_FONT* fontEndScr = NULL;
     ALLEGRO_BITMAP * logopng = NULL;
     ALLEGRO_DISPLAY* display = NULL;
-   // ALLEGRO_SAMPLE *sample=NULL;
-    //ALLEGRO_SAMPLE_INSTANCE *instance = NULL;
+    ALLEGRO_SAMPLE *sample=NULL;
+    ALLEGRO_SAMPLE_ID *sample_id;
+    ALLEGRO_SAMPLE_INSTANCE *instance = NULL;
+    ALLEGRO_SAMPLE *sample2=NULL;
+    ALLEGRO_SAMPLE_INSTANCE *instance2 = NULL;
     ALLEGRO_EVENT_QUEUE* event_queue = NULL;
     ALLEGRO_TIMER* timer = NULL;
+    
+
+
 
     int proximoMovimento = 0;
     bool teclas[255] = { false };
     font = al_load_font("./fonts/harry.ttf", 30, 0);
     fontInitScr = al_load_font("./fonts/dogicapixel.ttf", 14, 0);
     fontFooterScr = al_load_font("./fonts/dogicapixel.ttf", 11, 0);
+    fontEndScr = al_load_font("./fonts/harry.ttf", 72, 0);
+    
 
     // State variables
     int state = MENU;
@@ -150,21 +159,32 @@ int main(int argc, char** argv){
     }
 
     int sprite = 0, fator = 1;
-    int tempo, miliseg = 200;
+    int t = 0,tempo, miliseg = 200;
     float pac_x = 40;
     float pac_y = 40;
 
-    al_clear_to_color(al_map_rgb(21, 10, 0));//Quantidade de Audios
+    al_clear_to_color(al_map_rgb(21, 10, 0));
 
-    //sample = al_load_sample( "audios/harrysong.wav" );
-    //instance = al_create_sample_instance(sample);
+    sample = al_load_sample( "./audios/harrysong.wav" );
+    instance = al_create_sample_instance(sample);
 
-    //al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+    sample2 = al_load_sample( "./audios/gameover.wav" );
+    instance2 = al_create_sample_instance(sample2);
 
-    /*if (!sample){
+
+    al_attach_sample_instance_to_mixer(instance, al_get_default_mixer());
+    al_attach_sample_instance_to_mixer(instance2, al_get_default_mixer());
+
+
+    if (!sample){
         printf( "Audio clip sample not loaded!\n" ); 
         return -1;
-    }*/
+    }
+
+    if(!sample2){
+        printf("Audio clip sample2 not loaded!\n");
+        return -1;
+    }
 
     while (!termina){
         
@@ -406,7 +426,8 @@ int main(int argc, char** argv){
                 demons[i].desenha_dementador();
                 if(pac.getpacx() == demons[i].getposx() 
                     && pac.getpacy() == demons[i].getposy()){
-                exit(1);
+                        state = GAMEOVER;
+                    break;
                 }
             }
             
@@ -414,35 +435,59 @@ int main(int argc, char** argv){
 
                 al_clear_to_color(al_map_rgb(21, 10, 0));
 
-                //al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+                al_play_sample(sample, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
 
                 logopng = al_load_bitmap("images/logo.png");
                 al_draw_bitmap(logopng,175,20,0); 
 
-                if (tempo > 50 ) 
-                    tempo=0; 
+                if (t>20 && t<90) {
+                    al_draw_text(fontInitScr, al_map_rgb(255,255,255), 275, 340, 0,"PRESS (SPACE) TO START GAME");
+                } else if(t>100) {
+                     // cout << "tempo: " << tempo << endl;
+                    t = 0; 
+                }
+                t++;
                 
-                if (tempo < 25 )
-                    // cout << "tempo: " << tempo << endl; 
-                al_draw_text(fontInitScr, al_map_rgb(255, 255, 255), 275, 340, 0,"PRESS (SPACE) TO START GAME");
                 
                 al_draw_text(fontFooterScr, al_map_rgb(255, 255, 0), 146, 570, 0,"© 2022 - PacPotter, By: Carlos Eduado, Vinicius do Carmo e Pedro Emanuel ");
                 // cout << "Tela Inicial!!" << endl;
-            } 
+            }  else if(state == GAMEOVER) {
+                al_stop_sample(sample_id); // pausa o audio
+                // cout << "Sample id: " << sample_id << endl;
+
+                al_play_sample(sample2, 1.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,NULL);
+
+                break;
+            }
 
             al_flip_display();
         }
     }
 
+    if(state == GAMEOVER) {
+        
+        al_clear_to_color(al_map_rgb(21, 10, 0));
+
+        al_draw_text(fontEndScr, al_map_rgb(255, 255, 0), 300, 300, 0,"GAME OVER");
+
+    }
+
+    // cout << "ERRO GAME OVER: " << state << endl;
+    al_flip_display();
+    sleep(4);
+    
     //Destroi componentes
     al_destroy_timer(timer);
     al_destroy_display(display);
     al_destroy_event_queue(event_queue);
-   //al_destroy_sample(sample);
-    //al_destroy_sample_instance(instance);
+    al_destroy_sample(sample);
+    al_destroy_sample_instance(instance);
+    al_destroy_sample(sample2);
+    al_destroy_sample_instance(instance2);
     al_destroy_bitmap(logopng);
     al_destroy_font(font);
     al_destroy_font(fontInitScr);
+    al_destroy_font(fontEndScr);
     al_destroy_font(fontFooterScr);
 
     for (int i = 0; i < 15; i++) {
