@@ -2,8 +2,8 @@ ALLEGRO_FLAGS=-L/usr/local/lib -lallegro `pkg-config --libs allegro-5 allegro_au
 
 ALLEGRO_INCLUDE= -I/usr/local/include/allegro5
 
-all: ./libs/Bloco.o ./libs/Pilula.o ./libs/Pacman.o ./libs/Movimentacao.o  ./libs/Dementador.o Main.o
-	g++ ./libs/Bloco.o ./libs/Pilula.o ./libs/Pacman.o ./libs/Movimentacao.o ./libs/Dementador.o Main.o -o Main.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+all: ./libs/Bloco.o ./libs/Pilula.o ./libs/Pacman.o ./libs/Aleatorios.o ./libs/Individual.o ./libs/Movimentacao.o  ./libs/Dementador.o Main.o
+	g++ ./libs/Bloco.o ./libs/Pilula.o ./libs/Aleatorios.o ./libs/Individual.o ./libs/Pacman.o ./libs/Movimentacao.o ./libs/Dementador.o Main.o -o Main.exe $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
 Pacman.o: ./libs/Pacman.h ./libs/Pacman.cpp
 	g++ -c ./libs/Pacman.cpp -o ./libs/Pacman.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
@@ -20,8 +20,15 @@ Dementador.o: ./libs/Dementador.h ./libs/Dementador.cpp
 Pilula.o: ./libs/Pilula.h ./libs/Pilula.cpp
 	g++ -c Pilula.cpp -o Pilula.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
 
+Aleatorios.o: ./libs/Aleatorios.h ./libs/Aleatorios.cpp
+	g++ -c Aleatorios.cpp -o Aleatorios.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
+Individual.o: ./libs/Individual.h ./libs/Individual.cpp
+	g++ -c Individual.cpp -o Individual.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
 Main.o: ./libs/Bloco.h ./libs/Pilula.h Main.cpp
 	g++ -c Main.cpp -o Main.o $(ALLEGRO_INCLUDE) $(ALLEGRO_FLAGS)
+
 
 clear: 
 	rm *.o *.exe

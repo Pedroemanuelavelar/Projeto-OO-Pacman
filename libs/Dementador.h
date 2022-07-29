@@ -10,6 +10,7 @@ public:
 	~Dementador();
 	//
 	void desenha_dementador();
+	virtual void randomDir(float, float, int** matriz); 
 	//
 	void setdemx(float);
 	void setdemy(float);
@@ -30,6 +31,10 @@ private:
 	//padrao
 	int dem_y_matriz;
 	int dem_x_matriz;
+	int dem;
+
+	bool updem, downdem, leftdem, rightdem;
+	bool direcaodem[1];
 };
 
 #endif // !DEMENTADOR_H
